@@ -6,7 +6,6 @@ module predecode
 	input [`PC_SIZE-1:0]		pc,
 	
 	input						ld_stall,
-	input [`PC_SIZE-1:0]		ex_pc,
 	input						pc_sel,
 
 	input						take,
@@ -34,6 +33,7 @@ assign add2 =	ld_stall ? `PC_SIZE'b0 :
 
 assign sum = pc + add2;
 
-assign pc_next = pc_sel ? ex_pc : sum;
+// assign pc_next = pc_sel ? ex_pc : sum;
+assign pc_next = sum;
 
 endmodule
