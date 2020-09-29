@@ -18,6 +18,7 @@
 
 `define RANGE_S_IMM4	11:7
 `define RANGE_S_IMM11	31:25
+`define RANGE_S_MODE	14:12
 
 `define RANGE_B_IMM4	11:8
 `define RANGE_B_IMM10	30:25
@@ -43,3 +44,21 @@
 `define OPCODE_LUI		7'b0110111
 `define OPCODE_AUIPC	7'b0010111
 `define OPCODE_S_TYPE	7'b0100011
+
+// alu_op
+`define ALU_OP_R	2'b00 
+`define ALU_OP_I	2'b01 
+`define ALU_OP_ADD  2'b10 
+`define ALU_OP_SUB	2'b11 
+
+`define ADD2_RS2	2'b10  
+`define ADD2_IMM	2'b01 
+`define ADD2_0		2'b00 
+
+`define MEM_MODE_B	3'b000
+`define MEM_MODE_H	3'b001 
+`define MEM_MODE_W	3'b010 
+`define MEM_MODE_BU	3'b100 
+`define MEM_MODE_HU 3'b101 
+
+
