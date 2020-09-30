@@ -1,6 +1,5 @@
 /*
  * 
- *
  * the reset is asynchronous
  */
 

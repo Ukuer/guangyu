@@ -44,6 +44,7 @@
 `define OPCODE_LUI		7'b0110111
 `define OPCODE_AUIPC	7'b0010111
 `define OPCODE_S_TYPE	7'b0100011
+`define OPCODE_NOP		7'b0000000
 
 // alu_op
 `define ALU_OP_R	2'b00 
@@ -61,4 +62,4 @@
 `define MEM_MODE_BU	3'b100 
 `define MEM_MODE_HU 3'b101 
 
-
+`define INSTR_NOP 32'b0
