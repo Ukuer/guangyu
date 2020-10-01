@@ -16,6 +16,7 @@ module control
 	output			ex_add2_sel,
 	output [1:0]	ex_alu_op,
 	output			ex_pc_sel,
+	output			ex_lui_sel,
 
 	output			wb_reg_write,
 	output			wb_memtoreg,
@@ -36,6 +37,7 @@ if (bxx_flush == 1'b1) begin
 		ex_add2_sel <= `ADD2_RS2;
 		ex_alu_op <= `ALU_OP_R;
 		ex_pc_sel <= 1'b0;
+		ex_lui_sel <= 1'b0;
 		wb_reg_write <= 1'b0;
 		wb_memtoreg <= 1'b0;
 		m_mem_read <= 1'b0;
@@ -54,6 +56,7 @@ else begin
 		ex_add2_sel <= `ADD2_RS2;
 		ex_alu_op <= `ALU_OP_R;
 		ex_pc_sel <= 1'b0;
+		ex_lui_sel <= 1'b0;
 		wb_reg_write <= 1'b1;
 		wb_memtoreg <= 1'b0;
 		m_mem_read <= 1'b0;
@@ -74,6 +77,7 @@ else begin
 		ex_branch <= 1'b0;
 		ex_add2_sel <= `ADD2_IMM;
 		ex_pc_sel <= 1'b0;
+		ex_lui_sel <= 1'b0;
 		wb_reg_write <= 1'b1;
 		wb_memtoreg <= 1'b0;
 		m_mem_read <= 1'b0;
@@ -88,6 +92,7 @@ else begin
 		ex_add2_sel <= `ADD2_IMM;
 		ex_alu_op <= `ALU_OP_I;
 		ex_pc_sel <= 1'b0;
+		ex_lui_sel <= 1'b0;
 		wb_reg_write <= 1'b1;
 		wb_memtoreg <= 1'b1;
 		m_mem_read <= 1'b1;
@@ -102,6 +107,7 @@ else begin
 		ex_add2_sel <= `ADD2_RS2;
 		ex_alu_op <= `ALU_OP_SUB;
 		ex_pc_sel <= 1'b0;
+		ex_lui_sel <= 1'b0;
 		wb_reg_write <= 1'b0;
 		wb_memtoreg <= 1'b0;
 		m_mem_read <= 1'b0;
@@ -116,6 +122,7 @@ else begin
 		ex_add2_sel <= `ADD2_0;
 		ex_alu_op <= `ALU_OP_ADD;
 		ex_pc_sel <= 1'b1;
+		ex_lui_sel <= 1'b0;
 		wb_reg_write <= 1'b1;
 		wb_memtoreg <= 1'b0;
 		m_mem_read <= 1'b0;
@@ -130,6 +137,7 @@ else begin
 		ex_add2_sel <= `ADD2_0;
 		ex_alu_op <= `ALU_OP_ADD;
 		ex_pc_sel <= 1'b1;
+		ex_lui_sel <= 1'b0;
 		wb_reg_write <= 1'b1;
 		wb_memtoreg <= 1'b0;
 		m_mem_read <= 1'b0;
@@ -144,6 +152,7 @@ else begin
 		ex_add2_sel <= `ADD2_IMM;
 		ex_alu_op <= `ALU_OP_ADD;
 		ex_pc_sel <= 1'b0;
+		ex_lui_sel <= 1'b0;
 		wb_reg_write <= 1'b0;
 		wb_memtoreg <= 1'b0;
 		m_mem_read <= 1'b0;
@@ -151,6 +160,36 @@ else begin
 		if_jalr_en <= 1'b0;
 		end
 	
+	OPCODE_LUI: begin 
+		shift_imm_sel <= 1'b0;
+		s_imm_sel <= 1'b0,
+		ex_branch <= 1'b0;
+		ex_add2_sel <= `ADD2_0;
+		ex_alu_op <= `ALU_OP_ADD;
+		ex_pc_sel <= 1'b0;
+		ex_lui_sel <= 1'b1;
+		wb_reg_write <= 1'b1;
+		wb_memtoreg <= 1'b0;
+		m_mem_read <= 1'b0;
+		m_mem_write <= 1'b0;
+		if_jalr_en <= 1'b0;
+		end
+
+	OPCODE_AUIPC: begin 
+		shift_imm_sel <= 1'b0;
+		s_imm_sel <= 1'b0,
+		ex_branch <= 1'b0;
+		ex_add2_sel <= `ADD2_LUI;
+		ex_alu_op <= `ALU_OP_ADD;
+		ex_pc_sel <= 1'b1;
+		ex_lui_sel <= 1'b0;
+		wb_reg_write <= 1'b1;
+		wb_memtoreg <= 1'b0;
+		m_mem_read <= 1'b0;
+		m_mem_write <= 1'b0;
+		if_jalr_en <= 1'b0;
+		end
+
 	OPCODE_NOP: begin 
 		shift_imm_sel <= 1'b0;
 		s_imm_sel <= 1'b0,
@@ -158,6 +197,7 @@ else begin
 		ex_add2_sel <= `ADD2_IMM;
 		ex_alu_op <= `ALU_OP_ADD;
 		ex_pc_sel <= 1'b0;
+		ex_lui_sel <= 1'b0;
 		wb_reg_write <= 1'b0;
 		wb_memtoreg <= 1'b0;
 		m_mem_read <= 1'b0;
@@ -172,6 +212,7 @@ else begin
 		ex_add2_sel <= `ADD2_IMM;
 		ex_alu_op <= `ALU_OP_ADD;
 		ex_pc_sel <= 1'b0;
+		ex_lui_sel <= 1'b0;
 		wb_reg_write <= 1'b0;
 		wb_memtoreg <= 1'b0;
 		m_mem_read <= 1'b0;
@@ -182,7 +223,5 @@ else begin
 	endcase
 end
 end
-
-
 
 endmodule

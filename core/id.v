@@ -3,7 +3,7 @@
 module id
 (
 	input [`PC_SIZE-1:0]		pc,
-	input [`INSTR_SIZE-1:0]		instr,
+	// input [`INSTR_SIZE-1:0]		instr, // not necessary
 
 	// regfiles
 	output [`XLEN-1:0]			read_data1,
@@ -11,6 +11,7 @@ module id
 
 	output [`XLEN-1:0]			imm,
 	output [`PC_SIZE-1:0]		bxx_imm,
+	output [`XLEN-1:0]			lui_imm,
 	output [3:0]				alu_funct,
 	output [`RFIDX_WIDTH-1:0]	rd_index,
 	output [`RFIDX_WIDTH-1:0]	rs1_index,
@@ -64,6 +65,8 @@ assign bxx_imm = {20{instr[`RANGE_B_IMM12]},
 		instr[`RANGE_B_IMM11],instr[`RANGE_B_IMM10],
 		instr[`RANGE_B_IMM4], 1'b0};
 
+// lui-type immidate
+assign lui = {instr[`RANGE_LUI_IMM], 12'b0};
 
 
 

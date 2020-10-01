@@ -2,45 +2,49 @@
 
 module id_ex
 (
-	output [`XLEN-1:0]			read_data1,
+	input [`XLEN-1:0]			read_data1,
 	output [`XLEN-1:0]			read_data1_out,
-	output [`XLEN-1:0]			read_data2,
+	input [`XLEN-1:0]			read_data2,
 	output [`XLEN-1:0]			read_data2_out,
 	
-	output [`XLEN-1:0]			imm,
+	input [`XLEN-1:0]			imm,
 	output [`XLEN-1:0]			imm_out,
-	output [`PC_SIZE-1:0]		bxx_imm,
+	input [`XLEN-1:0]			lui_imm,
+	output [`XLEN-1:0]			lui_imm_out,
+	input [`PC_SIZE-1:0]		bxx_imm,
 	output [`PC_SIZE-1:0]		bxx_imm_out,
-	output [3:0]				alu_funct,
+	input [3:0]					alu_funct,
 	output [3:0]				alu_funct_out,
 
-	output [`RFIDX_WIDTH-1:0]	rd_index,
+	input [`RFIDX_WIDTH-1:0]	rd_index,
 	output [`RFIDX_WIDTH-1:0]	rd_index_out,
-	output [`RFIDX_WIDTH-1:0]	rs1_index,
+	input [`RFIDX_WIDTH-1:0]	rs1_index,
 	output [`RFIDX_WIDTH-1:0]	rs1_index_out,
-	output [`RFIDX_WIDTH-1:0]	rs2_index,
+	input [`RFIDX_WIDTH-1:0]	rs2_index,
 	output [`RFIDX_WIDTH-1:0]	rs2_index_out,
-	output [`PC_SIZE-1:0]		pc,
+	input [`PC_SIZE-1:0]		pc,
 	output [`PC_SIZE-1:0]		pc_out,
-	output [2:0]				m_mem_mode,
+	input [2:0]					m_mem_mode,
 	output [2:0]				m_mem_mode_out,
 
 	// control sign 
-	output			ex_branch,
+	input			ex_branch,
 	output			ex_branch_out,
-	output			ex_add2_sel,
+	input			ex_add2_sel,
 	output			ex_add2_sel_out,
-	output [1:0]	ex_alu_op,
+	input [1:0]		ex_alu_op,
 	output [1:0]	ex_alu_op_out,
-	output			ex_pc_sel,
+	input			ex_pc_sel,
 	output			ex_pc_sel_out,
-	output			m_mem_read,
+	input			ex_lui_sel,
+	output			ex_lui_sel_out,
+	input			m_mem_read,
 	output			m_mem_read_out,
-	output			m_mem_write,
+	input			m_mem_write,
 	output			m_mem_write_out,
-	output			wb_reg_write,
+	input			wb_reg_write,
 	output			wb_reg_write_out,
-	output			wb_memtoreg,
+	input			wb_memtoreg,
 	output			wb_memtoreg_out,
 
 	input clk,
@@ -53,6 +57,8 @@ dff read_data2_reg#(`XLEN)(read_data2, read_data2_out, clk);
 
 //////////////////////////////////////
 dff imm_reg#(`XLEN)(imm, imm_out, clk);
+
+dff lui_imm_reg#(`XLEN)(lui_imm, lui_imm_out, clk);
 
 dff bxx_imm_reg#(`XLEN)(bxx_imm, bxx_imm_out, clk);
 
@@ -78,6 +84,8 @@ dff ex_add2_sel_reg#(1)(ex_add2_sel, ex_add2_sel_out,clk);
 dff ex_alu_op_reg#(2)(ex_alu_op, ex_alu_op_out,clk);
 
 dff ex_pc_sel_reg#(1)(ex_pc_sel, ex_pc_sel_out,clk);
+
+dff ex_lui_sel_reg#(1)(ex_lui_sel, ex_lui_sel_out,clk);
 
 dff m_mem_read_reg#(1)(m_mem_read, m_mem_read_out, clk);
 

@@ -31,6 +31,7 @@
 `define RANGE_J_IMM19	19:12
 `define RANGE_J_IMM20	31
 `define RANGE_SHAMT		24:20
+`define RANGE_LUI_IMM	31:12
 
 // opcode
 `define	OPCODE_R_TYPE	7'b0110011
@@ -44,6 +45,8 @@
 `define OPCODE_LUI		7'b0110111
 `define OPCODE_AUIPC	7'b0010111
 `define OPCODE_S_TYPE	7'b0100011
+`define OPCODE_LUI		7'b0110111
+`define OPCODE_AUIPC	7'b0010111 
 `define OPCODE_NOP		7'b0000000
 
 // alu_op
@@ -55,6 +58,7 @@
 `define ADD2_RS2	2'b10  
 `define ADD2_IMM	2'b01 
 `define ADD2_0		2'b00 
+`define ADD2_LUI	2'b11
 
 `define MEM_MODE_B	3'b000
 `define MEM_MODE_H	3'b001 
