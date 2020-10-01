@@ -2,9 +2,6 @@
 
 module id
 (
-	input [`PC_SIZE-1:0]		pc,
-	// input [`INSTR_SIZE-1:0]		instr, // not necessary
-
 	// regfiles
 	output [`XLEN-1:0]			read_data1,
 	output [`XLEN-1:0]			read_data2,
@@ -20,7 +17,6 @@ module id
 	output [`RFIDX_WIDTH-1:0]	rs1_index,
 	output [`RFIDX_WIDTH-1:0]	rs2_index,
 	
-	output [`PC_SIZE-1:0]		pc_out,
 	output [2:0]				m_mem_mode,
 
 	// for ifecth stage
@@ -37,6 +33,7 @@ module id
 	output			ex_add2_sel,
 	output [1:0]	ex_alu_op,
 	output			ex_pc_sel,
+	output			exl_lui_sel,
 	output			m_mem_read,
 	output			m_mem_write,
 	output			wb_reg_write,
@@ -123,6 +120,7 @@ control  id_control
 		.ex_add2_sel(ex_add2_sel),
 		.ex_alu_op(ex_alu_op),
 		.ex_pc_sel(ex_pc_sel),
+		.ex_lui_sel(ex_lui_sel),
 
 		.wb_reg_write(wb_reg_write),
 		.wb_memtoreg(wb_memtoreg),

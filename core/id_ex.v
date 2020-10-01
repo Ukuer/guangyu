@@ -50,6 +50,9 @@ module id_ex
 	input			wb_memtoreg,
 	output			wb_memtoreg_out,
 
+	input			take,
+	output			take_out,
+
 	input clk,
 );
 
@@ -100,5 +103,7 @@ dff wb_reg_write_reg#(1)(wb_reg_write, wb_reg_write_out,clk);
 
 dff wb_memtoreg_reg#(1)(wb_memtoreg, wb_memtoreg_out,clk);
 
+
+dff take_reg#(1)(take, take_out,clk);
 
 endmodule
