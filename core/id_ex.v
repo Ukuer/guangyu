@@ -13,8 +13,11 @@ module id_ex
 	output [`XLEN-1:0]			lui_imm_out,
 	input [`PC_SIZE-1:0]		bxx_imm,
 	output [`PC_SIZE-1:0]		bxx_imm_out,
+
 	input [3:0]					alu_funct,
 	output [3:0]				alu_funct_out,
+	input [2:0]					bxx_funct,
+	output [2:0]				bxx_funct_out,
 
 	input [`RFIDX_WIDTH-1:0]	rd_index,
 	output [`RFIDX_WIDTH-1:0]	rd_index_out,
@@ -62,8 +65,10 @@ dff lui_imm_reg#(`XLEN)(lui_imm, lui_imm_out, clk);
 
 dff bxx_imm_reg#(`XLEN)(bxx_imm, bxx_imm_out, clk);
 
-dff alu_funct_reg#(`XLEN)(alu_funct, alu_funct_out, clk);
+dff alu_funct_reg#(4)(alu_funct, alu_funct_out, clk);
 
+
+dff bxx_funct_reg#(3)(bxx_funct, bxx_funct_out, clk);
 
 /////////////////////////////////////
 dff rd_index_reg#(`RFIDX_WIDTH)(rd_index, rd_index_out, clk);

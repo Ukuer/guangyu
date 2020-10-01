@@ -23,7 +23,7 @@ wire [`INSTR_SIZE-1:0]	instr,
 wire	if_en;
 wire	instr_nop_sel;
 
-assign pc_out = pc_next;
+assign pc_out = pc;
 assign instr_out = instr_nop_sel ? `INSTR_NOP : instr;
 
 

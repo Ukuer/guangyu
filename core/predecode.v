@@ -28,7 +28,7 @@ wire [6:0] opcode = instr[6:0]
 wire jal = (opcode == `OPCODE_JAL);
 wire bxx = (opcode == `OPCODE_B_TYPE);
 
-assign instr_nop_sel = id_jalr;	
+assign instr_nop_sel = id_jalr | predict_fail;	
 
 // the immidate offset of pc in jal
 wire [`PC_SIZE-1:0] jal_imm_addr = 
@@ -51,11 +51,31 @@ wire [`PC_SIZE-1:0] add1, add2;
 
 assign add1 = predict_fail ? bxx_fail_pc : pc;
 
-assign add2 =	jal  ? jal_imm_addri+4:	
+always @(*)
+begin
+	if (predict_fail )begin 
+		add2 <= bxx_fail_imm;
+		end 
+	else if (id_jalr) begin 
+		add2 <= id_reg_value;
+		end 
+	else if (bxx & take )begin 
+		add2 <= bxx_imm_addr + 4;
+		end 
+	else if (jal) begin 
+		add2 <= jal_imm_addr + 4;
+		end 
+	else 
+		add2 <= `PC_SIZE'h4;
+end 
+
+/*
+assign add2 =	jal  ? jal_imm_addr+4:	
 				(bxx & take) ?	bxx_imm_addr+4:
 				id_jalr ? id_reg_value : 
 				predict_fail ? bxx_fail_imm :
 							`PC_SIZE'd4;
+*/
 
 assign sum = pc + add2;
 

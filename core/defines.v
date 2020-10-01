@@ -24,6 +24,7 @@
 `define RANGE_B_IMM10	30:25
 `define RANGE_B_IMM11	7
 `define RANGE_B_IMM12	31
+`define RANGE_B_FUNCT	14:12
 
 `define RANGE_U_IMM		31:12
 `define RANGE_J_IMM10	30:21
@@ -66,6 +67,13 @@
 `define ALU_SRA		4'b1101
 `define ALU_OR		4'b0110 
 `define ALU_AND		4'b0111 
+
+`define B_EQ		3'b000 
+`define B_NE		3'b001
+`define B_LT		3'b100 
+`define B_GE		3'b101 
+`define B_LTU		3'b100 
+`define B_GEU		3'b111 
 
 
 `define ADD2_RS2	2'b10  
