@@ -44,10 +44,10 @@
 `define OPCODE_JALR		7'b1100111
 `define OPCODE_JAL		7'b1101111
 `define OPCODE_LUI		7'b0110111
-`define OPCODE_AUIPC	7'b0010111
+`define OPCODE_AUIPC		7'b0010111
 `define OPCODE_S_TYPE	7'b0100011
-`define OPCODE_LUI		7'b0110111
-`define OPCODE_AUIPC	7'b0010111 
+//`define OPCODE_LUI		7'b0110111
+//`define OPCODE_AUIPC	7'b0010111 
 `define OPCODE_NOP		7'b0000000
 
 // alu_op
@@ -72,7 +72,7 @@
 `define B_NE		3'b001
 `define B_LT		3'b100 
 `define B_GE		3'b101 
-`define B_LTU		3'b100 
+`define B_LTU		3'b110 
 `define B_GEU		3'b111 
 
 

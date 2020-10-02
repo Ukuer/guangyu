@@ -11,7 +11,7 @@ module dfflr #(
 	output [WIDTH-1:0]		qout,
 
 	input					clk,
-	input					rst_n,
+	input					rst_n
 );
 
 reg [WIDTH-1:0]		q_r;	// the register
@@ -37,7 +37,7 @@ module dfflrs #(
 	output [WIDTH-1:0]		qout,
 
 	input					clk,
-	input					rst_n,
+	input					rst_n
 );
 
 reg [WIDTH-1:0]		q_r;	
@@ -62,7 +62,7 @@ module dffl #(
 	input [WIDTH-1:0]		next,
 	output [WIDTH-1:0]		qout,
 
-	input					clk,
+	input					clk
 );
 
 reg [WIDTH-1:0]		q_r;	
@@ -84,7 +84,7 @@ module dffrs #(
 	output [WIDTH-1:0]		qout,
 
 	input					clk,
-	input					rst_n,
+	input					rst_n
 );
 
 reg [WIDTH-1:0]		q_r;	
@@ -109,7 +109,7 @@ module dffr #(
 	output [WIDTH-1:0]		qout,
 
 	input					clk,
-	input					rst_n,
+	input					rst_n
 );
 
 reg [WIDTH-1:0]		q_r;	
@@ -131,7 +131,7 @@ module dff #(
 	input [WIDTH-1:0]		next,
 	output [WIDTH-1:0]		qout,
 
-	input					clk,
+	input					clk
 );
 
 reg [WIDTH-1:0]		q_r;	

@@ -33,8 +33,8 @@ module id_ex
 	// control sign 
 	input			ex_branch,
 	output			ex_branch_out,
-	input			ex_add2_sel,
-	output			ex_add2_sel_out,
+	input	[1:0]		ex_add2_sel,
+	output[1:0]		ex_add2_sel_out,
 	input [1:0]		ex_alu_op,
 	output [1:0]	ex_alu_op_out,
 	input			ex_pc_sel,
@@ -53,57 +53,57 @@ module id_ex
 	input			take,
 	output			take_out,
 
-	input clk,
+	input clk
 );
 
-dff read_data1_reg#(`XLEN)(read_data1, read_data1_out, clk);
+dff #(`XLEN) read_data1_reg(read_data1, read_data1_out, clk);
 
-dff read_data2_reg#(`XLEN)(read_data2, read_data2_out, clk);
+dff #(`XLEN) read_data2_reg(read_data2, read_data2_out, clk);
 
 
 //////////////////////////////////////
-dff imm_reg#(`XLEN)(imm, imm_out, clk);
+dff #(`XLEN) imm_reg(imm, imm_out, clk);
 
-dff lui_imm_reg#(`XLEN)(lui_imm, lui_imm_out, clk);
+dff #(`XLEN) lui_imm_reg (lui_imm, lui_imm_out, clk);
 
-dff bxx_imm_reg#(`XLEN)(bxx_imm, bxx_imm_out, clk);
+dff #(`XLEN) bxx_imm_reg (bxx_imm, bxx_imm_out, clk);
 
-dff alu_funct_reg#(4)(alu_funct, alu_funct_out, clk);
+dff #(4) alu_funct_reg(alu_funct, alu_funct_out, clk);
 
 
-dff bxx_funct_reg#(3)(bxx_funct, bxx_funct_out, clk);
-
-/////////////////////////////////////
-dff rd_index_reg#(`RFIDX_WIDTH)(rd_index, rd_index_out, clk);
-
-dff rs1_index_reg#(`RFIDX_WIDTH)(rs1_index, rs1_index_out, clk);
-
-dff rs2_index_reg#(`RFIDX_WIDTH)(rs2_index, rs2_index_out, clk);
-
-dff pc_reg#(`PC_SIZE)(pc, pc_out, clk);
-
-dff m_mem_mode_reg#(3)(m_mem_mode, m_mem_mode_out, clk);
+dff #(3) bxx_funct_reg(bxx_funct, bxx_funct_out, clk);
 
 /////////////////////////////////////
-dff ex_branch_reg#(1)(ex_branch, ex_branch_out, clk);
+dff #(`RFIDX_WIDTH) rd_index_reg(rd_index, rd_index_out, clk);
 
-dff ex_add2_sel_reg#(1)(ex_add2_sel, ex_add2_sel_out,clk);
+dff #(`RFIDX_WIDTH) rs1_index_reg(rs1_index, rs1_index_out, clk);
 
-dff ex_alu_op_reg#(2)(ex_alu_op, ex_alu_op_out,clk);
+dff #(`RFIDX_WIDTH) rs2_index_reg(rs2_index, rs2_index_out, clk);
 
-dff ex_pc_sel_reg#(1)(ex_pc_sel, ex_pc_sel_out,clk);
+dff #(`PC_SIZE) pc_reg(pc, pc_out, clk);
 
-dff ex_lui_sel_reg#(1)(ex_lui_sel, ex_lui_sel_out,clk);
+dff #(3) m_mem_mode_reg(m_mem_mode, m_mem_mode_out, clk);
 
-dff m_mem_read_reg#(1)(m_mem_read, m_mem_read_out, clk);
+/////////////////////////////////////
+dff #(1) ex_branch_reg(ex_branch, ex_branch_out, clk);
 
-dff m_mem_write_reg#(1)(m_mem_write, m_mem_write_reg_out, clk);
+dff #(2) ex_add2_sel_reg(ex_add2_sel, ex_add2_sel_out,clk);
 
-dff wb_reg_write_reg#(1)(wb_reg_write, wb_reg_write_out,clk);
+dff #(2) ex_alu_op_reg(ex_alu_op, ex_alu_op_out,clk);
 
-dff wb_memtoreg_reg#(1)(wb_memtoreg, wb_memtoreg_out,clk);
+dff #(1) ex_pc_sel_reg(ex_pc_sel, ex_pc_sel_out,clk);
+
+dff #(1) ex_lui_sel_reg(ex_lui_sel, ex_lui_sel_out,clk);
+
+dff #(1) m_mem_read_reg(m_mem_read, m_mem_read_out, clk);
+
+dff #(1) m_mem_write_reg(m_mem_write, m_mem_write_out, clk);
+
+dff #(1) wb_reg_write_reg(wb_reg_write, wb_reg_write_out,clk);
+
+dff #(1) wb_memtoreg_reg(wb_memtoreg, wb_memtoreg_out,clk);
 
 
-dff take_reg#(1)(take, take_out,clk);
+dff #(1) take_reg(take, take_out,clk);
 
 endmodule

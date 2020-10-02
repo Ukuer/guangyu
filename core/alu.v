@@ -7,10 +7,10 @@ module alu
 
 	input [3:0]			alu_sel,
 
-	output [`XLEN-1:0]	sum,
-	output				zero,
-	output				sign,
-	output				carry,
+	output reg[`XLEN-1:0]	sum,
+	output 				zero,
+	output 				sign,
+	output reg 				carry
 );
 
 assign zero = ~(| sum);
@@ -18,7 +18,7 @@ assign sign = sum[`XLEN-1];
 
 always @(*)
 begin
-	case (alu_sel): begin 
+	case(alu_sel) 
 		
 		`ALU_ADD: begin 
 			{carry, sum} <= add1 + add2;
@@ -30,8 +30,7 @@ begin
 			sum <= add1 << add2 ;
 			end
 		`ALU_SLT: begin
-			sum <= (add1[`XLEN-1] ^ add2[`XLEN-1]) ? add2[`XLEN-1] : 
-													(add1 < add2);
+			sum <= (add1[`XLEN-1] ^ add2[`XLEN-1]) ? add2[`XLEN-1] : (add1 < add2);
 			end 
 		`ALU_SLTU: begin 
 			sum <= add1 < add2;

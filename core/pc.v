@@ -7,12 +7,11 @@ module pc
 
 	input					pc_rst_n,
 	output					if_en,			// enable sign for ifetch
-	input					clk,
+	input					clk
 );
 
 assign if_en = pc_rst_n;
 
-
-dfflr pcr #(`PC_SIZE)(pc_next, pc_out, clk, pc_rst_n);
+dfflr # (32) pcr (pc_next, pc_out, clk, pc_rst_n);
 
 endmodule

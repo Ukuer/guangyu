@@ -11,7 +11,7 @@ module mem
 	input [2:0]			m_mem_mode,
 
 	output [`XLEN-1:0]	m_data,
-	output [`XLEN-1:0]	ex_result_out,
+	output [`XLEN-1:0]	ex_result_out
 
 );
 
@@ -25,7 +25,7 @@ dcache dcache(
 				.mode(m_mem_mode),
 				.write_en(m_mem_write),
 				.read_en(m_mem_read),
-				.data_out(m_data),
+				.data_out(m_data)
 				);
 
 

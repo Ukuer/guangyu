@@ -7,11 +7,11 @@ module regfile
 	input [`RFIDX_WIDTH-1:0]	write_addr,
 	input [`XLEN-1:0]			write_data,
 
-	output [XLEN-1:0]			read_data1,
-	output [XLEN-1:0]			read_data2
+	output reg [`XLEN-1:0]			read_data1,
+	output reg [`XLEN-1:0]			read_data2,
 
 	input						reg_write,
-	input						clk,
+	input						clk
 );
 
 // write the data when clk posedge

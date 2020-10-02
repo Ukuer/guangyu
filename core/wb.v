@@ -7,7 +7,7 @@ module wb
 
 	input					wb_memtoreg,
 
-	output [`XLEN-1:0]		write_reg_data,
+	output [`XLEN-1:0]		write_reg_data
 );
 
 assign write_reg_data = wb_memtoreg ? m_data : ex_result;

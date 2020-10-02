@@ -15,18 +15,20 @@ module ex
 	input					take,
 
 	input					ex_branch,
-	input					ex_add2_sel,
+	input	[1:0]				ex_add2_sel,
 	input					ex_pc_sel,
 	input					ex_lui_sel,
 	input [1:0]				ex_alu_op,
 	
 	output [`XLEN-1:0]		result,
-	output [`XLEN-1:]		rs2_data_out,
+	output [`XLEN-1:0]		rs2_data_out,
 
 	output					bxx_flush,
 	output					predict_fail,
-	output [`XLEN-1:0]		fail_addr,
+	output [`XLEN-1:0]		fail_addr
 );
+
+assign rs2_data_out = rs2_data;
 
 // alu control
 wire [3:0]	alu_sel;
@@ -78,7 +80,7 @@ ex_bpt  ex_bpt
 
 	.bxx_flush(bxx_flush),
 	.predict_fail(predict_fail),
-	.fail_addr(fail_addr),
+	.fail_addr(fail_addr)
 );
 		
 

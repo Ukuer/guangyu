@@ -2,7 +2,7 @@
 
 module cpu(
 			input clk,
-			input pc_rst_n,
+			input pc_rst_n
 );
 
 ////////////////////////////////////////////////
@@ -30,7 +30,7 @@ ifecth ifecth (
 	.take(if_take),
 
 	.clk(clk),
-	.pc_rst_n(pc_rst_n),	
+	.pc_rst_n(pc_rst_n)	
 );
 
 /////////////////////////////////////////////////
@@ -49,7 +49,7 @@ if_id if_id (
 	.take(if_take),
 	.take_out(id_take),
 
-	.clk(clk),
+	.clk(clk)
 );
 
 ///////////////////////////////////////////////
@@ -85,6 +85,7 @@ wire	id_wb_memtoreg;
 
 id  id (
 
+	.instr(id_instr),
 	.read_data1(id_data1),
 	.read_data2(id_data2),
 
@@ -121,7 +122,7 @@ id  id (
 	.wb_reg_write(id_wb_reg_write),
 	.wb_memtoreg(id_wb_memtoreg),
 
-	.clk(clk),
+	.clk(clk)
 );
 
 
@@ -209,7 +210,7 @@ id_ex id_ex (
 
 	.take(id_take),
 	.take_out(ex_take),
-	.clk(clk),
+	.clk(clk)
 );
 
 
@@ -242,7 +243,7 @@ ex ex (
 
 	.bxx_flush(id_ex_bxx_flush),
 	.predict_fail(ex_predict_fail),
-	.fail_addr(ex_bxx_fail_imm),
+	.fail_addr(ex_bxx_fail_imm)
 );
 
 /////////////////////////////////////////////
@@ -274,13 +275,13 @@ ex_mem	ex_mem (
 	.rd_index(ex_rd_index),
 	.rd_index_out(mem_rd_index),
 
-	.clk(clk),
+	.clk(clk)
 );
 
 ////////////////////////////////////////////////
 
-wire [`XLEN-1:0]	mem_data,
-wire [`XLEN-1:0]	mem_result_out,
+wire [`XLEN-1:0]	mem_data;
+wire [`XLEN-1:0]	mem_result_out;
 
 mem mem (
 	.ex_result(mem_result),
@@ -292,21 +293,21 @@ mem mem (
 	.m_mem_mode(m_mem_mode),
 
 	.m_data(mem_data),
-	.ex_result_out(mem_result_out),
+	.ex_result_out(mem_result_out)
 
 );
 
 /////////////////////////////////////////////////
 
-wire [`XLEN-1:0]	wb_data,
-wire [`XLEN-1:0]	wb_result_out,
+wire [`XLEN-1:0]	wb_data;
+wire [`XLEN-1:0]	wb_result_out;
 wire [`RFIDX_WIDTH-1:0]	wb_rd_index;
-wire				wb_memtoreg, wb_reg_write;
+wire				wb_memtoreg;
 mem_wb mem_wb (
 	.m_data(mem_data),
 	.m_data_out(wb_data),
 
-	.ex_result(m_mem_read_out),
+	.ex_result(mem_result_out),
 	.ex_result_out(wb_result_out),
 	
 	.wb_reg_write(mem_wb_reg_write),
@@ -316,17 +317,18 @@ mem_wb mem_wb (
 
 	.rd_index(mem_rd_index),
 	.rd_index_out(wb_write_index),
+	.clk(clk)
 );
 
 ///////////////////////////////////////////
-module wb
+wb wb
 (
 	.m_data(wb_data),
 	.ex_result(wb_result_out),
 
 	.wb_memtoreg(wb_memtoreg),
 
-	.write_reg_data(wb_write_data),
+	.write_reg_data(wb_write_data)
 );
 
 endmodule

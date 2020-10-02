@@ -15,17 +15,19 @@ module mem_wb
 
 	input [`RFIDX_WIDTH-1:0]	rd_index,
 	output [`RFIDX_WIDTH-1:0]	rd_index_out,
+	
+	input clk 
 );
 
 
-dff wb_reg_write_reg#(1)(wb_reg_write, wb_reg_write_out,clk);
+dff #(1) wb_reg_write_reg(wb_reg_write, wb_reg_write_out,clk);
 
-dff wb_memtoreg_reg#(1)(wb_memtoreg, wb_memtoreg_out,clk);
+dff #(1) wb_memtoreg_reg(wb_memtoreg, wb_memtoreg_out,clk);
 
-dff rd_index_reg#(`RFIDX_WIDTH)(rd_index, rd_index_out, clk);
+dff #(`RFIDX_WIDTH) rd_index_reg(rd_index, rd_index_out, clk);
 
 
-dff ex_result_reg#(`XLEN)(ex_result, ex_result_out, clk);
+dff #(`XLEN) ex_result_reg(ex_result, ex_result_out, clk);
 
-dff m_data_reg#(`XLEN)(m_data, m_data_out, clk);
+dff #(`XLEN) m_data_reg(m_data, m_data_out, clk);
 endmodule

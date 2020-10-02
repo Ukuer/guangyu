@@ -11,14 +11,14 @@ module if_id
 	input						take,
 	output						take_out,
 
-	input clk,
+	input clk
 );
 
-dff pc_register #(`PC_SIZE) (pc, pc_out, clk);
+dff #(`PC_SIZE) pc_register (pc, pc_out, clk);
 
-dff instr_register #(`INSTR_SIZE)(instr, instr_out, clk);
+dff #(`INSTR_SIZE) instr_register(instr, instr_out, clk);
 
-dff take_register #(1)(take, take_out, clk);
+dff #(1) take_register (take, take_out, clk);
 
 
 endmodule 

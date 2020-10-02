@@ -2,6 +2,7 @@
 
 module id
 (
+	input [`XLEN-1:0]				instr,
 	// regfiles
 	output [`XLEN-1:0]			read_data1,
 	output [`XLEN-1:0]			read_data2,
@@ -30,47 +31,46 @@ module id
 	// control sign 
 	input			bxx_flush,
 	output			ex_branch,
-	output			ex_add2_sel,
+	output[1:0]			ex_add2_sel,
 	output [1:0]	ex_alu_op,
 	output			ex_pc_sel,
-	output			exl_lui_sel,
+	output			ex_lui_sel,
 	output			m_mem_read,
 	output			m_mem_write,
 	output			wb_reg_write,
 	output			wb_memtoreg,
 
-	input clk,
+	input clk
 );
 
 // extend immidate
 // IA-type and LD-type
 wire[11:0] imm11 = instr[`RANGE_IMM12];
-wire [`XLEN-1:0]	imm_ext = 
-	{(`XLEN-12){imm11[11]}, imm11[11:0]};
+wire [`XLEN-1:0]	imm_ext = {{(`XLEN-12){imm11[11]}}, imm11[11:0]};
 
 // I-shift-type
 wire [4:0] shamt_imm = instr[`RANGE_SHAMT];
-wire [`XLEN-1:0]	shift_imm = 
-	{(`XLEN-5)'b0, shamt_imm};
+wire [`XLEN-1:0]	shift_imm = {{(`XLEN-5){1'b0}}, shamt_imm};
 wire shift_imm_sel;
+wire [`XLEN-1:0] i_imm;
 assign i_imm = shift_imm_sel ? shift_imm : imm_ext;
 
 // S-type immidate
 wire s_imm_sel;
-wire [`XLEN-1:0] s_imm = {20{instr[31]}, instr[`RANGE_S_IMM11], instr[`RANGE_S_IMM4]};
+wire [`XLEN-1:0] s_imm = {{20{instr[31]}}, instr[`RANGE_S_IMM11], instr[`RANGE_S_IMM4]};
 
 assign imm = s_imm_sel ? s_imm : i_imm;
 
 // B-type immidate
-assign bxx_imm = {20{instr[`RANGE_B_IMM12]},
+assign bxx_imm = {{20{instr[`RANGE_B_IMM12]}},
 		instr[`RANGE_B_IMM11],instr[`RANGE_B_IMM10],
 		instr[`RANGE_B_IMM4], 1'b0};
 
 assign bxx_funct = instr[`RANGE_B_FUNCT];
 
 // lui-type immidate
-assign lui = {instr[`RANGE_LUI_IMM], 12'b0};
-
+wire [`XLEN-1:0] lui = {instr[`RANGE_LUI_IMM], 12'b0};
+assign lui_imm = lui;
 
 
 // regfiles
@@ -126,7 +126,7 @@ control  id_control
 		.wb_memtoreg(wb_memtoreg),
 
 		.m_mem_read(m_mem_read),
-		.m_mem_write(m_mem_write),
+		.m_mem_write(m_mem_write)
 );
 
 endmodule

@@ -3,7 +3,7 @@
 module ex_bpt
 (
 	input			ex_branch,
-	input			bxx_funct,
+	input	[2:0]		bxx_funct,
 
 	input			alu_zero,
 	input			alu_sign,
@@ -15,14 +15,14 @@ module ex_bpt
 
 	output				bxx_flush,
 	output				predict_fail,
-	output [`XLEN-1:0]	fail_addr,
+	output [`XLEN-1:0]	fail_addr
 );
 
-wire correct;
+reg correct;
 
 always @(*)
 begin
-	case (bxx_funct): begin
+	case (bxx_funct)
 		`B_EQ: begin
 			correct <= alu_zero;
 			end
@@ -34,8 +34,10 @@ begin
 			end
 		`B_GE : begin 
 			correct <= ~ alu_sign;
+			end
 		`B_LTU : begin 
 			correct <= alu_carry;
+			end
 		`B_GEU : begin
 			correct <= ~alu_carry;
 			end 
@@ -49,10 +51,10 @@ end
 assign predict_fail = (take ^ correct ) & ex_branch;
 assign bxx_flush = predict_fail;
 
-assign fail_addr = `XLEN{~ bxx_imm[`XLEN-1]} &
-					bxx_imm;
+assign fail_addr = {`XLEN{~ bxx_imm[`XLEN-1]} }& bxx_imm;
 
 
+endmodule
 
 
 

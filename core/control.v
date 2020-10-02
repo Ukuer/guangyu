@@ -7,32 +7,32 @@ module control
 	
 	input			bxx_flush,		
 
-	output			if_jalr_en,
+	output reg	if_jalr_en,
 
-	output			shift_imm_sel,
-	output			s_imm_sel,
+	output reg		shift_imm_sel,
+	output reg			s_imm_sel,
 
-	output			ex_branch,
-	output			ex_add2_sel,
-	output [1:0]	ex_alu_op,
-	output			ex_pc_sel,
-	output			ex_lui_sel,
+	output reg			ex_branch,
+	output reg[1:0]	ex_add2_sel,
+	output reg[1:0]	ex_alu_op,
+	output reg			ex_pc_sel,
+	output reg			ex_lui_sel,
 
-	output			wb_reg_write,
-	output			wb_memtoreg,
+	output reg			wb_reg_write,
+	output reg			wb_memtoreg,
 
-	output			m_mem_read,
-	output			m_mem_write,
+	output reg			m_mem_read,
+	output reg			m_mem_write
 
 );
 
-reg [6:0] opcode;
+//reg [6:0] opcode_r;
 
 always @(*)
 begin
 if (bxx_flush == 1'b1) begin
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b0;
 		ex_add2_sel <= `ADD2_RS2;
 		ex_alu_op <= `ALU_OP_R;
@@ -47,11 +47,11 @@ if (bxx_flush == 1'b1) begin
 
 else begin 
 
-	case(opcode):begin
+	case(opcode)
 	
-	OPCODE_R_TYPE:	begin 
+	`OPCODE_R_TYPE:	begin 
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b0;
 		ex_add2_sel <= `ADD2_RS2;
 		ex_alu_op <= `ALU_OP_R;
@@ -64,7 +64,7 @@ else begin
 		if_jalr_en <= 1'b0;
 		end
 
-	OPCODE_IA_TYPE: begin
+	`OPCODE_IA_TYPE: begin
 		if (shift_funct4 == 4'b0001 ||
 			shift_funct4 == 4'b0101 ||
 			shift_funct4 == 4'b1101)
@@ -73,7 +73,7 @@ else begin
 		else 
 			shift_imm_sel <= 1'b0;
 
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b0;
 		ex_add2_sel <= `ADD2_IMM;
 		ex_pc_sel <= 1'b0;
@@ -85,9 +85,9 @@ else begin
 		if_jalr_en <= 1'b0;
 		end
 		
-	OPCODE_ID_TYPE: begin 
+	`OPCODE_ID_TYPE: begin 
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b0;
 		ex_add2_sel <= `ADD2_IMM;
 		ex_alu_op <= `ALU_OP_I;
@@ -100,9 +100,9 @@ else begin
 		if_jalr_en <= 1'b0;
 		end
 		
-	OPCODE_B_TYPE: begin
+	`OPCODE_B_TYPE: begin
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b1;
 		ex_add2_sel <= `ADD2_RS2;
 		ex_alu_op <= `ALU_OP_SUB;
@@ -115,9 +115,9 @@ else begin
 		if_jalr_en <= 1'b0;
 		end
 
-	OPCODE_JAL: begin 
+	`OPCODE_JAL: begin 
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b1;
 		ex_add2_sel <= `ADD2_0;
 		ex_alu_op <= `ALU_OP_ADD;
@@ -130,9 +130,9 @@ else begin
 		if_jalr_en <= 1'b0;
 		end
 
-	OPCODE_JALR: begin 
+	`OPCODE_JALR: begin 
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b1;
 		ex_add2_sel <= `ADD2_0;
 		ex_alu_op <= `ALU_OP_ADD;
@@ -145,9 +145,9 @@ else begin
 		if_jalr_en <= 1'b1;
 		end
 
-	OPCODE_S_TYPE: begin 
+	`OPCODE_S_TYPE: begin 
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b1,
+		s_imm_sel <= 1'b1;
 		ex_branch <= 1'b0;
 		ex_add2_sel <= `ADD2_IMM;
 		ex_alu_op <= `ALU_OP_ADD;
@@ -160,9 +160,9 @@ else begin
 		if_jalr_en <= 1'b0;
 		end
 	
-	OPCODE_LUI: begin 
+	`OPCODE_LUI: begin 
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b0;
 		ex_add2_sel <= `ADD2_0;
 		ex_alu_op <= `ALU_OP_ADD;
@@ -175,9 +175,9 @@ else begin
 		if_jalr_en <= 1'b0;
 		end
 
-	OPCODE_AUIPC: begin 
+	`OPCODE_AUIPC: begin 
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b0;
 		ex_add2_sel <= `ADD2_LUI;
 		ex_alu_op <= `ALU_OP_ADD;
@@ -190,9 +190,9 @@ else begin
 		if_jalr_en <= 1'b0;
 		end
 
-	OPCODE_NOP: begin 
+	`OPCODE_NOP: begin 
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b0;
 		ex_add2_sel <= `ADD2_IMM;
 		ex_alu_op <= `ALU_OP_ADD;
@@ -207,7 +207,7 @@ else begin
 
 	default: begin
 		shift_imm_sel <= 1'b0;
-		s_imm_sel <= 1'b0,
+		s_imm_sel <= 1'b0;
 		ex_branch <= 1'b0;
 		ex_add2_sel <= `ADD2_IMM;
 		ex_alu_op <= `ALU_OP_ADD;

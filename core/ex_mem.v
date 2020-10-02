@@ -23,25 +23,25 @@ module ex_mem
 	input [`RFIDX_WIDTH-1:0]	rd_index,
 	output [`RFIDX_WIDTH-1:0]	rd_index_out,
 
-	input			clk,
+	input			clk
 );
 
-dff m_mem_read_reg#(1)(m_mem_read, m_mem_read_out, clk);
+dff #(1) m_mem_read_reg(m_mem_read, m_mem_read_out, clk);
 
-dff m_mem_write_reg#(1)(m_mem_write, m_mem_write_reg_out, clk);
+dff #(1) m_mem_write_reg(m_mem_write, m_mem_write_out, clk);
 
-dff wb_reg_write_reg#(1)(wb_reg_write, wb_reg_write_out,clk);
+dff #(1) wb_reg_write_reg(wb_reg_write, wb_reg_write_out,clk);
 
-dff wb_memtoreg_reg#(1)(wb_memtoreg, wb_memtoreg_out,clk);
+dff #(1) wb_memtoreg_reg (wb_memtoreg, wb_memtoreg_out,clk);
 
 
-dff ex_result_reg#(`XLEN)(ex_result, ex_result_out, clk);
+dff #(`XLEN)ex_result_reg (ex_result, ex_result_out, clk);
 
-dff rs2_data_reg#(`XLEN)(rs2_data, rs2_data_out, clk);
+dff #(`XLEN) rs2_data_reg(rs2_data, rs2_data_out, clk);
 
-dff m_mem_mode_reg#(3)(m_mem_mode, m_mem_mode_out, clk);
+dff #(3) m_mem_mode_reg(m_mem_mode, m_mem_mode_out, clk);
 
-dff rd_index_reg#(`RFIDX_WIDTH)(rd_index, rd_index_out, clk);
+dff #(`RFIDX_WIDTH) rd_index_reg (rd_index, rd_index_out, clk);
 
 
 endmodule 

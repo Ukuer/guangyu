@@ -13,13 +13,13 @@ module ifecth
 
 	output						take,
 
-	input						clk
-	input						pc_rst_n,	
+	input						clk,
+	input						pc_rst_n
 );
 
 wire [`PC_SIZE-1:0]	pc_next;
 wire [`PC_SIZE-1:0]	pc;
-wire [`INSTR_SIZE-1:0]	instr,
+wire [`INSTR_SIZE-1:0]	instr;
 wire	if_en;
 wire	instr_nop_sel;
 
@@ -27,7 +27,7 @@ assign pc_out = pc;
 assign instr_out = instr_nop_sel ? `INSTR_NOP : instr;
 
 
-pc pc(	.pc_next(pc_next),
+pc pc_u(	.pc_next(pc_next),
 		.pc_out(pc),
 		.pc_rst_n(pc_rst_n),
 		.if_en(if_en),
@@ -46,7 +46,7 @@ predecode predecode(	.instr(instr),
 						.instr_nop_sel(instr_nop_sel),
 						.predict_fail(predict_fail),
 						.take(take),
-						.pc_next(pc_next);
+						.pc_next(pc_next)
 						);
 
 endmodule
